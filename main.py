@@ -19,6 +19,11 @@ def index():
 def profile():
     return render_template("profile.html", name=current_user.name)
 
+@main.errorhandler(413)
+def too_large(e):
+    flash('File is too large')
+    return redirect(url_for('main.upload'))
+
 @main.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
