@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from . import db
@@ -24,17 +24,21 @@ def profile():
 def upload():
     if request.method == 'POST':
         if 'file' not in request.files:
+            flash('No file part')
             return redirect(url_for('main.upload'))
 
         file = request.files['file']
 
         if file.filename == '':
+            flash('No selected file')
             return redirect(url_for('main.upload'))
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('main.profile'))
+
+        flash('File extention not allowed')
         return redirect(url_for('main.upload'))
     if request.method == 'GET':
         return render_template("upload.html")

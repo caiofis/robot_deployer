@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -5,7 +6,7 @@ from flask_login import LoginManager
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
-UPLOAD_FOLDER = '/home/uploaded_files'
+UPLOAD_FOLDER = 'uploaded_files'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 def create_app():
@@ -14,7 +15,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'secret'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    app.config['UPLOAD_FOLDER'] = os.path.dirname(os.path.abspath(__file__)) + "/" + UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 15 * 1000 * 1000
 
     db.init_app(app)
