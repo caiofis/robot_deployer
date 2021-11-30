@@ -41,7 +41,7 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('main.profile'))
+            return redirect(url_for('main.index'))
 
         flash('File extention not allowed')
         return redirect(url_for('main.upload'))
