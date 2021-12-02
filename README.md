@@ -10,3 +10,6 @@ Since it is running on Docker you just have to run:
 ``` bash
 ./docker/run.sh
 ```
+
+### Demo:
+https://youtu.be/88bWkjUvrhE
